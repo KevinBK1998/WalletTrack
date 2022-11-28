@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
 
-  TransactionList(this.transactions);
+  const TransactionList(this.transactions);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class TransactionList extends StatelessWidget {
                         child: Text(
                           transactions[index].title,
                           textAlign: TextAlign.left,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 28),
@@ -53,7 +53,7 @@ class TransactionList extends StatelessWidget {
                         width: 400,
                         child: Text(
                           DateFormat.yMMMEd().format(transactions[index].date),
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.grey,
                               fontStyle: FontStyle.italic,
                               fontSize: 12),
@@ -62,7 +62,7 @@ class TransactionList extends StatelessWidget {
                     ],
                   ),
                   Container(
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       width: 140,
                       height: 50,
                       decoration: BoxDecoration(
