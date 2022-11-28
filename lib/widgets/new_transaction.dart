@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'transaction_button.dart';
 
-class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
-  final categoryController = TextEditingController();
+class NewTransaction extends StatefulWidget {
   final Function addTx;
 
   NewTransaction(this.addTx);
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
+
+  final categoryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +46,8 @@ class NewTransaction extends StatelessWidget {
             ),
             Container(
                 alignment: Alignment.centerRight,
-                child: TransactionButton(submitData, 'Submit', Colors.blue)),
+                child: TransactionButton(
+                    submitDataWithPosParams, () {}, 'Submit', Colors.blue)),
           ],
         ),
       ),
@@ -53,6 +62,11 @@ class NewTransaction extends StatelessWidget {
     if (enteredTitle.isEmpty || enteredCategory.isEmpty || enteredAmount <= 0) {
       return;
     }
-    addTx(enteredTitle, enteredCategory, enteredAmount);
+    widget.addTx(enteredTitle, enteredCategory, enteredAmount);
+    Navigator.of(context).pop();
+  }
+
+  void submitDataWithPosParams(BuildContext ctx, Function fn) {
+    submitData();
   }
 }

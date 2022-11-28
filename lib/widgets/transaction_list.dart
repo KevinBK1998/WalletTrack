@@ -11,7 +11,7 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 500,
+      height: 600,
       child: ListView.builder(
           itemCount: transactions.length,
           itemBuilder: (ctx, index) {
@@ -38,7 +38,6 @@ class TransactionList extends StatelessWidget {
                     children: [
                       Container(
                         alignment: Alignment.centerLeft,
-
                         child: Text(
                           transactions[index].title,
                           textAlign: TextAlign.left,
@@ -50,7 +49,6 @@ class TransactionList extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.centerRight,
-
                         child: Text(
                           DateFormat.yMMMEd().format(transactions[index].date),
                           style: const TextStyle(
