@@ -24,7 +24,7 @@ class _UserTransactionState extends State<UserTransaction> {
         date: DateTime.now()),
   ];
 
-  void _addTransaction(String title, double amount, String category) {
+  void _addTransaction(String title, String category, double amount) {
     var newTx = Transaction(
         id: DateTime.now().toString(),
         amount: amount,

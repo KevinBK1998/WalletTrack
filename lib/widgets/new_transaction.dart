@@ -20,31 +20,39 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               autocorrect: true,
-              controller: titleController,
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              keyboardType: TextInputType.number,
               autofocus: true,
-              controller: amountController,
+              controller: titleController,
+              onSubmitted: (_) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Category'),
               autocorrect: true,
               controller: categoryController,
+              onSubmitted: (_) => submitData(),
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Amount'),
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData(),
+              controller: amountController,
             ),
             Container(
                 alignment: Alignment.centerRight,
-                child: TransactionButton(
-                    () => addTx(
-                        titleController.text,
-                        double.parse(amountController.text),
-                        categoryController.text),
-                    'Submit',
-                    Colors.blue)),
+                child: TransactionButton(submitData, 'Submit', Colors.blue)),
           ],
         ),
       ),
     );
+  }
+
+  void submitData() {
+    var enteredTitle = titleController.text;
+    var enteredCategory = categoryController.text;
+    var enteredAmount = double.parse(amountController.text);
+    print('$enteredTitle, $enteredCategory, $enteredAmount');
+    if (enteredTitle.isEmpty || enteredCategory.isEmpty || enteredAmount <= 0) {
+      return;
+    }
+    addTx(enteredTitle, enteredCategory, enteredAmount);
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BalanceText extends StatelessWidget {
   final double balance;
 
-  BalanceText(this.balance);
+  const BalanceText(this.balance);
 
   @override
   Widget build(BuildContext context) {

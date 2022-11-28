@@ -10,13 +10,13 @@ class TransactionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(2),
-      width: 300,
+      margin: EdgeInsets.all(2),
+      width: 170,
       child: ElevatedButton(
           onPressed: pressHandler,
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(buttonColor)),
-          child: Text(textContent, style: TextStyle(color: Colors.white,fontSize: 20))),
+          child: Text(textContent, style: TextStyle(color: Colors.white,fontSize: 18))),
     );
   }
 }

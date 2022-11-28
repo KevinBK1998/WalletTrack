@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_tracker/widgets/new_transaction.dart';
 import 'package:wallet_tracker/widgets/user_transaction.dart';
-import 'widgets/transaction_list.dart';
-import 'models/transaction.dart';
 import 'widgets/transaction_button.dart';
 import 'widgets/main_balance.dart';
 
@@ -18,7 +15,7 @@ class MainScreenApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('WalletTrack Home Page'),
+          title: const Text('WalletTrack Home Page'),
         ),
         body: MyHomeScreenPage(),
       ),
@@ -33,10 +30,6 @@ class MyHomeScreenPage extends StatefulWidget {
 
 class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
   double _balance = 0;
-
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
-  final categoryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,28 +52,14 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
   }
 
   void addIncome() {
-    var amount = double.parse(amountController.text);
     setState(() {
-      // _transactions.add(Transaction(
-      //     id: 't4',
-      //     amount: double.parse(amountController.text),
-      //     title: titleController.text,
-      //     category: categoryController.text,
-      //     date: DateTime.now()));
-      _balance = _balance + amount;
+      _balance = _balance + 1;
     });
   }
 
   void addExpense() {
-    var amount = double.parse(amountController.text);
     setState(() {
-      // _transactions.add(Transaction(
-      //     id: 't3',
-      //     amount: -double.parse(amountController.text),
-      //     title: titleController.text,
-      //     category: categoryController.text,
-      //     date: DateTime.now()));
-      _balance = _balance - amount;
+      _balance = _balance - 1;
     });
   }
 }

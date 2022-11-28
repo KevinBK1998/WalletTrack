@@ -11,14 +11,14 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 300,
+      height: 500,
       child: ListView.builder(
           itemCount: transactions.length,
           itemBuilder: (ctx, index) {
             return Card(
               elevation: 2,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                       margin: const EdgeInsets.symmetric(
@@ -32,25 +32,25 @@ class TransactionList extends StatelessWidget {
                       child: Text(
                         transactions[index].category,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white,fontSize: 12),
                       )),
                   Column(
                     children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        width: 400,
+
                         child: Text(
                           transactions[index].title,
                           textAlign: TextAlign.left,
                           style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 28),
+                              fontSize: 20),
                         ),
                       ),
                       Container(
                         alignment: Alignment.centerRight,
-                        width: 400,
+
                         child: Text(
                           DateFormat.yMMMEd().format(transactions[index].date),
                           style: const TextStyle(
@@ -63,7 +63,7 @@ class TransactionList extends StatelessWidget {
                   ),
                   Container(
                       margin: const EdgeInsets.all(10),
-                      width: 140,
+                      width: 100,
                       height: 50,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -75,10 +75,10 @@ class TransactionList extends StatelessWidget {
                           )),
                       alignment: Alignment.center,
                       child: Text(
-                        'Rs.${transactions[index].amount.abs()}',
+                        'Rs.${transactions[index].amount.abs().toStringAsFixed(2)}',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 14,
                             color: transactions[index].amount.isNegative
                                 ? Colors.red
                                 : Colors.green),
