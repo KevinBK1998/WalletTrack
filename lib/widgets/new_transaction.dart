@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'transaction_button.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTx;
@@ -23,6 +22,7 @@ class _NewTransactionState extends State<NewTransaction> {
       elevation: 5,
       child: Container(
         width: double.infinity,
+        margin: EdgeInsets.all(10),
         child: Column(
           children: [
             TextField(
@@ -45,9 +45,16 @@ class _NewTransactionState extends State<NewTransaction> {
               controller: amountController,
             ),
             Container(
-                alignment: Alignment.centerRight,
-                child: TransactionButton(
-                    submitDataWithPosParams, () {}, 'Submit', Colors.blue)),
+              alignment: Alignment.centerRight,
+              margin: EdgeInsets.all(10),
+              child: TextButton(
+                onPressed: submitData,
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.blue, fontSize: 18),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -64,9 +71,5 @@ class _NewTransactionState extends State<NewTransaction> {
     }
     widget.addTx(enteredTitle, enteredCategory, enteredAmount);
     Navigator.of(context).pop();
-  }
-
-  void submitDataWithPosParams(BuildContext ctx, Function fn) {
-    submitData();
   }
 }

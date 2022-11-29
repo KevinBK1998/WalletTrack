@@ -28,20 +28,7 @@ class MyHomeScreenPage extends StatefulWidget {
 class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
   double _balance = 0;
 
-  final List<Transaction> _transactions = [
-    Transaction(
-        id: 't1',
-        category: 'Video Games',
-        amount: -3500,
-        title: 'Zelda',
-        date: DateTime.now()),
-    Transaction(
-        id: 't2',
-        category: 'Salary',
-        amount: 35000,
-        title: 'October',
-        date: DateTime.now()),
-  ];
+  final List<Transaction> _transactions = [];
 
   void _startAddTransaction(BuildContext ctx, Function fn) {
     showModalBottomSheet(
