@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets/chart.dart';
 import 'widgets/transaction_button.dart';
 import 'widgets/main_balance.dart';
 import 'widgets/new_transaction.dart';
@@ -26,9 +27,22 @@ class MyHomeScreenPage extends StatefulWidget {
 }
 
 class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
-  double _balance = 0;
-
   final List<Transaction> _transactions = [];
+
+  double get _balance {
+    double totalSum = 0;
+    for (var transaction in _transactions) {
+      totalSum = totalSum + transaction.amount;
+    }
+    return totalSum;
+  }
+
+  List<Transaction> get _recentTransactions {
+    return _transactions
+        .where(
+            (tx) => tx.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+        .toList();
+  }
 
   void _startAddTransaction(BuildContext ctx, Function fn) {
     showModalBottomSheet(
@@ -50,7 +64,6 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
         date: DateTime.now());
     setState(() {
       _transactions.add(newTx);
-      _balance = _balance - amount;
     });
   }
 
@@ -63,7 +76,6 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
         date: DateTime.now());
     setState(() {
       _transactions.add(newTx);
-      _balance = _balance + amount;
     });
   }
 
@@ -93,6 +105,7 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
                     'Add Expense', Colors.red),
               ],
             ),
+            Chart(_recentTransactions),
             TransactionList(_transactions),
           ],
         ),
