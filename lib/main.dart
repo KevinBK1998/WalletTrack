@@ -67,27 +67,22 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
         });
   }
 
-  void _addOutgoingTransaction(String title, String category, double amount) {
-    var newTx = Transaction(
-        id: DateTime.now().toString(),
-        amount: -amount,
-        title: title,
-        category: category,
-        date: DateTime.now());
-    setState(() {
-      _transactions.add(newTx);
-    });
-  }
-
-  void _addTransaction(String title, String category, double amount) {
+  void _addTransaction(
+      String title, String category, double amount, DateTime date) {
     var newTx = Transaction(
         id: DateTime.now().toString(),
         amount: amount,
         title: title,
         category: category,
-        date: DateTime.now());
+        date: date);
     setState(() {
       _transactions.add(newTx);
+    });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tx) => tx.id == id);
     });
   }
 
@@ -113,7 +108,7 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
               ],
             ),
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _deleteTransaction),
           ],
         ),
       ),

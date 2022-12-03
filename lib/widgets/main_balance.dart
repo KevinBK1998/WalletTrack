@@ -11,13 +11,17 @@ class BalanceText extends StatelessWidget {
       elevation: 5,
       child: Container(
         width: double.infinity,
+        height: 75,
         margin: const EdgeInsets.all(10),
-        child: Text(
-          'Rs.${balance.abs()}',
-          style: TextStyle(
-              fontSize: 28,
-              color: balance.isNegative ? Colors.red : Colors.green),
-          textAlign: TextAlign.center,
+        child:
+        FittedBox(
+          child: Text(
+            'Rs.${balance.abs().toStringAsFixed(2)}',
+            style: TextStyle(
+                fontSize: 28,
+                color: balance.isNegative ? Colors.red : Colors.green),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

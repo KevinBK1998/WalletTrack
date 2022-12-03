@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTx;
@@ -11,11 +12,12 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  final titleController = TextEditingController();
+  final _titleController = TextEditingController();
 
-  final amountController = TextEditingController();
+  final _amountController = TextEditingController();
 
-  final categoryController = TextEditingController();
+  final _categoryController = TextEditingController();
+  DateTime? _selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -29,30 +31,42 @@ class _NewTransactionState extends State<NewTransaction> {
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               autocorrect: true,
-              autofocus: true,
-              controller: titleController,
+              controller: _titleController,
               onSubmitted: (_) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Category'),
               autocorrect: true,
-              controller: categoryController,
+              controller: _categoryController,
               onSubmitted: (_) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
-              controller: amountController,
+              controller: _amountController,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    _selectedDate == null
+                        ? 'No date chosen'
+                        : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}',
+                  ),
+                ),
+                TextButton(
+                    onPressed: () => _presentDatePicker(context),
+                    child: Text('Choose date')),
+              ],
             ),
             Container(
               alignment: Alignment.centerRight,
-              margin: EdgeInsets.all(10),
-              child: TextButton(
+              child: ElevatedButton(
                 onPressed: submitData,
                 child: const Text(
                   'Submit',
-                  style: TextStyle(color: Colors.blue, fontSize: 18),
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
             ),
@@ -62,18 +76,37 @@ class _NewTransactionState extends State<NewTransaction> {
     );
   }
 
+  void _presentDatePicker(BuildContext context) {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2022, 12),
+            lastDate: DateTime.now())
+        .then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
+  }
+
   void submitData() {
-    var enteredTitle = titleController.text;
-    var enteredCategory = categoryController.text;
-    var enteredAmount = double.parse(amountController.text);
-    print('$enteredTitle, $enteredCategory, $enteredAmount');
-    if (enteredTitle.isEmpty || enteredCategory.isEmpty || enteredAmount <= 0) {
+    var enteredTitle = _titleController.text;
+    var enteredCategory = _categoryController.text;
+    var enteredAmount = double.parse(_amountController.text);
+    print('$enteredTitle, $enteredCategory, $enteredAmount, $_selectedDate');
+    if (enteredTitle.isEmpty ||
+        enteredCategory.isEmpty ||
+        _selectedDate == null ||
+        enteredAmount <= 0) {
       return;
     }
     if (widget.isExpense) {
       enteredAmount = -enteredAmount;
     }
-    widget.addTx(enteredTitle, enteredCategory, enteredAmount);
+    widget.addTx(enteredTitle, enteredCategory, enteredAmount, _selectedDate);
     Navigator.of(context).pop();
   }
 }
