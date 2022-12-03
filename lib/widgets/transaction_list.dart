@@ -11,7 +11,7 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 600,
+      height: 400,
       child: transactions.isEmpty
           ? Column(
               children: [
@@ -31,75 +31,42 @@ class TransactionList extends StatelessWidget {
               itemCount: transactions.length,
               itemBuilder: (ctx, index) {
                 return Card(
-                  elevation: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 10,
-                          ),
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor),
-                          alignment: Alignment.center,
-                          child: Text(
-                            transactions[index].category,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 12),
-                          )),
-                      Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
+                  elevation: 5,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                            padding: EdgeInsets.all(5),
+                            child: FittedBox(
+                                child: Text(transactions[index].category)))),
+                    title: Text(
+                      transactions[index].title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMEd().format(transactions[index].date),
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    trailing: Card(
+                      borderOnForeground: true,
+                      elevation: 5,
+                      color: transactions[index].amount.isNegative
+                          ? Colors.red
+                          : Colors.green,
+                      child: SizedBox(
+                        width: 75,
+                        height: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: FittedBox(
                             child: Text(
-                              transactions[index].title,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
+                              'Rs.${transactions[index].amount.abs().toStringAsFixed(2)}',
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              DateFormat.yMMMEd()
-                                  .format(transactions[index].date),
-                              style: TextStyle(
-                                  color: Theme.of(context).hintColor,
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: 12),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                      Container(
-                          margin: const EdgeInsets.all(10),
-                          width: 100,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                width: 2,
-                                color: transactions[index].amount.isNegative
-                                    ? Colors.red
-                                    : Colors.green,
-                              )),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Rs.${transactions[index].amount.abs().toStringAsFixed(2)}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: transactions[index].amount.isNegative
-                                    ? Colors.red
-                                    : Colors.green),
-                          )),
-                    ],
+                    ),
                   ),
                 );
               }),

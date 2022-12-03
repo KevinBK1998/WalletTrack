@@ -15,6 +15,18 @@ class MainScreenApp extends StatelessWidget {
       title: 'WalletTrack',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          headline6: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+          headline5: TextStyle(
+            color: Theme.of(context).hintColor,
+            fontStyle: FontStyle.italic,
+            fontSize: 12,
+          ),
+        ),
       ),
       home: MyHomeScreenPage(),
     );
