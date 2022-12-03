@@ -15,18 +15,18 @@ class MainScreenApp extends StatelessWidget {
       title: 'WalletTrack',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: TextTheme(
-          headline6: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-          headline5: TextStyle(
-            color: Theme.of(context).hintColor,
-            fontStyle: FontStyle.italic,
-            fontSize: 12,
-          ),
-        ),
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+              headline5: TextStyle(
+                color: Theme.of(context).hintColor,
+                fontStyle: FontStyle.italic,
+                fontSize: 12,
+              ),
+            ),
       ),
       home: MyHomeScreenPage(),
     );
@@ -56,14 +56,14 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
         .toList();
   }
 
-  void _startAddTransaction(BuildContext ctx, Function fn) {
+  void _startAddTransaction(BuildContext ctx, bool isExpense) {
     showModalBottomSheet(
         context: ctx,
         builder: (_) {
           return GestureDetector(
               onTap: () {},
               behavior: HitTestBehavior.opaque,
-              child: NewTransaction(fn));
+              child: NewTransaction(_addTransaction, isExpense));
         });
   }
 
@@ -79,7 +79,7 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
     });
   }
 
-  void _addIncomingTransaction(String title, String category, double amount) {
+  void _addTransaction(String title, String category, double amount) {
     var newTx = Transaction(
         id: DateTime.now().toString(),
         amount: amount,
@@ -96,12 +96,7 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('WalletTrack Home Page'),
-        actions: [
-          IconButton(
-              onPressed: () =>
-                  _startAddTransaction(context, _addIncomingTransaction),
-              icon: Icon(Icons.add))
-        ],
+        actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.add))],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -111,10 +106,10 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                TransactionButton(_startAddTransaction, _addIncomingTransaction,
-                    'Add Income', Colors.green),
-                TransactionButton(_startAddTransaction, _addOutgoingTransaction,
-                    'Add Expense', Colors.red),
+                TransactionButton(
+                    _startAddTransaction, false, 'Add Income', Colors.green),
+                TransactionButton(
+                    _startAddTransaction, true, 'Add Expense', Colors.red),
               ],
             ),
             Chart(_recentTransactions),
@@ -124,7 +119,7 @@ class _MyHomeScreenPageState extends State<MyHomeScreenPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _startAddTransaction(context, _addIncomingTransaction),
+        onPressed: () => {},
         child: Icon(Icons.add),
       ),
     );

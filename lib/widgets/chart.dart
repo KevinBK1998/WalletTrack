@@ -40,17 +40,31 @@ class Chart extends StatelessWidget {
       margin: EdgeInsets.all(10),
       child: Padding(
         padding: EdgeInsets.all(5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: groupedTransactionValues.map((day) {
-            return Flexible(
-              fit: FlexFit.tight,
-              child: ChartBar(
-                  day['day'] as String,
-                  day['amount'] as double,
-                  totalSumForWeek==0?0:(day['amount'] as double) / totalSumForWeek),
-            );
-          }).toList(),
+        child: Column(
+          children: [
+            Text(
+              'Expense Statistics',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            Text(
+              '(past week)',
+              style: Theme.of(context).textTheme.headline5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: groupedTransactionValues.map((day) {
+                return Flexible(
+                  fit: FlexFit.tight,
+                  child: ChartBar(
+                      day['day'] as String,
+                      day['amount'] as double,
+                      totalSumForWeek == 0
+                          ? 0
+                          : (day['amount'] as double) / totalSumForWeek),
+                );
+              }).toList(),
+            ),
+          ],
         ),
       ),
     );

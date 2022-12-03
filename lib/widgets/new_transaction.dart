@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTx;
+  final bool isExpense;
 
-  NewTransaction(this.addTx);
+  NewTransaction(this.addTx, this.isExpense);
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();
@@ -68,6 +69,9 @@ class _NewTransactionState extends State<NewTransaction> {
     print('$enteredTitle, $enteredCategory, $enteredAmount');
     if (enteredTitle.isEmpty || enteredCategory.isEmpty || enteredAmount <= 0) {
       return;
+    }
+    if (widget.isExpense) {
+      enteredAmount = -enteredAmount;
     }
     widget.addTx(enteredTitle, enteredCategory, enteredAmount);
     Navigator.of(context).pop();
